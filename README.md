@@ -21,3 +21,12 @@
 - [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
 
 
+## CRaC Name service
+Start the application with 
+```./gradlew run```
+
+Open a browser and type in
+```http://localhost:8080/names?gender=female&amount=10```
+
+You should see 10 random female names in JSON format in your browser and also the
+time it took to create the response.
