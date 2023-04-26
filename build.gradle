@@ -46,12 +46,8 @@ micronaut {
         annotations("eu.hansolo.micronaut.*")
     }
     crac {
-        enabled                     = true
-        baseImage                   = "ubuntu:22.04"
-        platform                    = "linux/amd64"
-        preCheckpointReadinessCheck = "curl --output /dev/null --silent --head http://localhost:8080"
-        network                     = "my-docker-network"
-        warmupScript                = "customWarmupScript.sh"
+        enabled = true
+        warmupScript.set(file("customWarmupScript.sh"))
     }
 }
 
