@@ -7,42 +7,33 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 
-@Controller("/")
+@Controller()
 public class CRaCController {
 
-    @Get
-    public Map<String, Object> index() {
-        return Collections.singletonMap("message", "Hello World");
-    }
-
-    // Call it like this: http://localhost:8080/names?gender=female&amount=10
-    @Get(value = "/names{?gender,amount}", produces = MediaType.APPLICATION_JSON)
+    // Call it like this: curl "http://localhost:8080/?gender=female&amount=10"
+    @Get(value = "/{?gender,amount}", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<?> getNames(@Nullable final String gender, @Nullable final Integer amount) {
-        final long         start   = System.nanoTime();
+        final long       start   = System.nanoTime();
 
-        final Gender       _gender = (null == gender || gender.isEmpty()) ? Constants.RND.nextBoolean() ? Gender.FEMALE : Gender.MALE : Gender.fromText(gender);
-        final int          _amount = (null == amount || amount < 1) ? Constants.RND.nextInt(Helper.getAllNames().size() - 1) : amount;
-        final List<Name>   names   = Helper.getRandomNames(_amount, _gender);
+        final Gender     _gender = (null == gender || gender.isEmpty()) ? Constants.RND.nextBoolean() ? Gender.FEMALE : Gender.MALE : Gender.fromText(gender);
+        final int        _amount = (null == amount || amount < 1) ? 5 : amount;
+        final List<Name> names   = Helper.getRandomNames(_amount, _gender);
 
         // Sort names
-        Collections.sort(names, Comparator.comparing(Name::getFirstName));
+        names.sort(Comparator.comparing(Name::getFirstName));
 
         // Create Json output
         final StringBuilder msgBuilder = new StringBuilder();
         msgBuilder.append("{\n")
                   .append("  \"names\":[\n");
-        names.forEach(name -> {
-            msgBuilder.append("    {\n")
-                      .append("      \"").append("first_name").append("\":\"").append(name.getFirstName()).append("\",\n")
-                      .append("      \"").append("gender").append("\":\"").append(name.getGender().name().toLowerCase()).append("\"\n")
-                      .append("    },\n");
-        });
+        names.forEach(name -> msgBuilder.append("    {\n")
+                  .append("      \"").append("first_name").append("\":\"").append(name.getFirstName()).append("\",\n")
+                  .append("      \"").append("gender").append("\":\"").append(name.getGender().name().toLowerCase()).append("\"\n")
+                  .append("    },\n"));
         msgBuilder.setLength(msgBuilder.length() - 2);
         msgBuilder.append("\n  ],\n")
                   .append("  \"response_time\":\"")
@@ -50,7 +41,6 @@ public class CRaCController {
                   .append(" ms\"\n")
                   .append("}");
 
-        final HttpResponse response = HttpResponse.ok(msgBuilder.toString()).contentType(MediaType.APPLICATION_JSON).status(HttpStatus.OK);
-        return response;
+        return HttpResponse.ok(msgBuilder.toString()).contentType(MediaType.APPLICATION_JSON).status(HttpStatus.OK);
     }
 }
