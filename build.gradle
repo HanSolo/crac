@@ -1,7 +1,8 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.crac") version "3.7.8"
     id("io.micronaut.application") version "3.7.8"
+    id("io.micronaut.docker") version "3.7.8"
+    id("io.micronaut.crac") version "3.7.8"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 version = "0.1"
@@ -43,6 +44,14 @@ micronaut {
     processing {
         incremental(true)
         annotations("eu.hansolo.micronaut.*")
+    }
+    crac {
+        enabled                     = true
+        baseImage                   = "ubuntu:22.04"
+        platform                    = "linux/amd64"
+        preCheckpointReadinessCheck = "curl --output /dev/null --silent --head http://localhost:8080"
+        network                     = "my-docker-network"
+        warmupScript                = "customWarmupScript.sh"
     }
 }
 

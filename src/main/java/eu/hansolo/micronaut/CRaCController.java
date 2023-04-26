@@ -14,8 +14,8 @@ import java.util.List;
 @Controller()
 public class CRaCController {
 
-    // Call it like this: curl "http://localhost:8080/?gender=female&amount=10"
-    @Get(value = "/{?gender,amount}", produces = MediaType.APPLICATION_JSON)
+    // Call it like this: curl "http://localhost:8080/names?gender=female&amount=10"
+    @Get(value = "/names{?gender,amount}", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<?> getNames(@Nullable final String gender, @Nullable final Integer amount) {
         final long       start   = System.nanoTime();
 
