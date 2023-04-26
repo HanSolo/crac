@@ -22,6 +22,10 @@
 
 
 ## CRaC Name service
+This is a little demo service, which first loads around 280000 names from a json
+file into memory and that has an endpoint that can generate a given amount of  
+either female or male first names and returns them in json format.
+
 Start the application with 
 ```./gradlew run```
 
