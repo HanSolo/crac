@@ -34,3 +34,7 @@ Open a browser and type in
 
 You should see 10 random female names in JSON format in your browser and also the
 time it took to create the response.
+
+### Build docker image
+Execute ```./gradlew dockerBuildCrac``` to create a docker image containing a CRaC
+enabled JDK and a pre-warmed, checkpointed application.
