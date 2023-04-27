@@ -59,7 +59,7 @@ The result should show something like this for the first response without CRaC:
 }
 ```
 
-This is for the first response only and you see that the response time in this case was 931 ms.
+This is for the first response only and you see that the response time in this case was <b>931 ms</b>.
 
 
 ### Run with CRaC
@@ -101,6 +101,6 @@ The result should show something like this for the first response with CRaC:
 }
 ```
 
-This is for the first response only and you see that the response time in this case was 21 ms,
+This is for the first response only and you see that the response time in this case was <b>21 ms</b>,
 which is way faster because the application was already "warmed up". Here the warm up
 is mainly loading the names from the json file into memory.
