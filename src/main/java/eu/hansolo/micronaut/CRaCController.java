@@ -20,7 +20,7 @@ public class CRaCController {
         final long       start   = System.nanoTime();
 
         final Gender     _gender = (null == gender || gender.isEmpty()) ? Constants.RND.nextBoolean() ? Gender.FEMALE : Gender.MALE : Gender.fromText(gender);
-        final int        _amount = (null == amount || amount < 1) ? 5 : amount;
+        final int        _amount = (null == amount || amount < 1 || amount > 100) ? 5 : amount;
         final List<Name> names   = Helper.getRandomNames(_amount, _gender);
 
         // Sort names
@@ -31,9 +31,9 @@ public class CRaCController {
         msgBuilder.append("{\n")
                   .append("  \"names\":[\n");
         names.forEach(name -> msgBuilder.append("    {\n")
-                  .append("      \"").append("first_name").append("\":\"").append(name.getFirstName()).append("\",\n")
-                  .append("      \"").append("gender").append("\":\"").append(name.getGender().name().toLowerCase()).append("\"\n")
-                  .append("    },\n"));
+                                        .append("      \"").append("first_name").append("\":\"").append(name.getFirstName()).append("\",\n")
+                                        .append("      \"").append("gender").append("\":\"").append(name.getGender().name().toLowerCase()).append("\"\n")
+                                        .append("    },\n"));
         msgBuilder.setLength(msgBuilder.length() - 2);
         msgBuilder.append("\n  ],\n")
                   .append("  \"response_time\":\"")

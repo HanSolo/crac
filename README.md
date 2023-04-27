@@ -1,7 +1,19 @@
 ## CRaC Name service
-This is a little demo service, which first loads around 280000 names from a json
-file into memory and that has an endpoint that can generate a given amount of  
-either female or male first names and returns them in json format.
+This is a little demo name service. It will lazy load around 280000 names from a json
+file into memory the first time you call it. That means the first time you call the service
+it will take a bit longer to get the response because it will first load the files into memory.
+Keep in mind that this is only to demonstrate CRaC, usually you won't do lazy loading at the
+first call. The service will return a json reponse with the names and it will also give you 
+the time it took to return the response.
+Starting it without CRaC will show that the first call takes longer. When using CRaC, the
+service will be warmed up before the checkpoint will be created.
+In the Micronaut CRaC module you can define a specific warmup script which will be called to
+warm up the service. In this case it will simply curl the service to make sure it is warmed up.
+After the script ran, a checkpoint will be created and will be stored in the docker image.
+With the checkpoint in the docker image the service will start up and it will be already
+warmed up which means the first time to response will be fast because the names already
+have been loaded.
+
 
 Start the application with 
 ```./gradlew run```
